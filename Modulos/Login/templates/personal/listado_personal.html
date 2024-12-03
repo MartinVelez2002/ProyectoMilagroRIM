@@ -1,0 +1,78 @@
+{% extends 'modulos.html' %}
+{% load static %}
+
+{% block title %}
+Módulo Personal
+{% endblock %}
+
+{% block search %}
+
+<form action="{{ dir_search }}" method="GET">
+    <div class="input-group">
+        <input type="text" class="form-control" name="query" value="{{ query }}"
+            placeholder="Filtrar por Nombre y/o Apellido" aria-describedby="basic-addon2" />
+        <button type="submit" class="btn btn-primary mr-1" id="idSearchSp">Buscar</button>
+    </div>
+</form>
+<a target="_blank" href="{% url 'login:generar_usuarios_pdf' %}" class="btn btn-secondary my-3"> Generar PDF de Usuarios</a>
+
+{% endblock %}
+
+{% block btnTitle %}
+<a class="btn btn-dark btn-add" href="{{ dirurl }}">
+    Registrar nuevo personal
+</a>
+{% endblock %}
+
+{% block thead %}
+<th> Nombre </th>
+<th> Apellido </th>
+<th> Cédula </th>
+<th> Correo Electrónico </th>
+<th> Rol </th>
+<th> Estado </th>
+<th> Acciones </th>
+{% endblock %}
+
+{% block tbody %}
+
+{% if personal %}
+{% for i in personal %}
+<tr>
+    <td> {{i.nombre}} </td>
+    <td> {{i.apellido}} </td>
+    <td> {{i.cedula}} </td>
+    <td> {{i.email}} </td>
+    <td> {{i.rol}} </td>
+    {% if i.estado == True %}
+    <td> Activo </td>
+    {% else %}
+    <td> Inactivo </td>
+    {% endif %}
+
+    <td>
+        {% if request.user.rol is not None %}
+        <a class="btn btn-dark" href="{% url 'login:editar_personal' i.id %}">
+            Editar
+        </a>
+        {% endif %}
+        <form action="{% url 'login:inactivar_usuario' pk=i.id %}" method="post" style="display: inline;">
+            {% csrf_token %}
+
+            {% if i.estado %}
+            <button type="submit" class="btn btn-danger">Inactivar</button> <!-- Rojo para Inactivo -->
+            {% else %}
+            <button type="submit" class="btn btn-success">Activar</button> <!-- Verde para Activo -->
+            {% endif %}
+        </form>
+    </td>
+
+    </td>
+</tr>
+{% endfor %}
+{% else %}
+<tr>
+    <td colspan="7"> No existe personal registrado</td>
+</tr>
+{% endif %}
+{% endblock %}

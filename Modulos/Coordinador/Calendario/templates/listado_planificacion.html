@@ -1,0 +1,55 @@
+{% extends 'modulos.html' %}
+{% load static %}
+
+{% block title %}
+Modulo Planificación
+{% endblock %}
+
+
+{% block btnTitle %}
+<a class="btn btn-dark btn-add" href="{{ dirurl }}">
+    Registra una nueva planificación
+</a>
+{% endblock %}
+
+{% block thead %}
+<th> Personal </th>
+<th> Periodo </th>
+<th> Turno </th>
+<th> Ubicación </th>
+<th> Estado </th>
+<th> Acciones </th>
+{% endblock %}
+
+{% block tbody %}
+{% if calendarioUs %}
+{% for i in calendarioUs %}
+<tr>
+    <td> {{i.usuario}} </td>
+    <td> {{i.calendario}} </td>
+    <td> {{i.turno}} </td>
+    <td> {{i.ubicacion}} </td>
+    {% if i.estado == True %}
+    <td> Activo </td>
+    {% else %}
+    <td> Inactivo </td>
+    {% endif %}
+    <td> 
+        <form action="{% url 'calendario:InactivarActivarPlanificacion' i.id %}" method="post" style="display: inline;">
+            {% csrf_token %}
+
+            {% if i.estado %}
+            <button type="submit" class="btn btn-danger">Inactivar</button> 
+            {% else %}
+            <button type="submit" class="btn btn-success">Activar</button> 
+            {% endif %}
+        </form>
+    </td>
+</tr>
+{% endfor %}
+{% else %}
+<tr>
+    <td colspan="6"> No existen planificaciones </td>
+</tr>
+{% endif %}
+{% endblock %}

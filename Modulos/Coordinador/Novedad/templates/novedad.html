@@ -1,0 +1,65 @@
+{% extends 'modulos.html' %}
+{% load static %}
+
+
+{% block title %}
+Modulo Novedad
+{% endblock %}
+
+{% block search %}
+<form action="{{ dir_search }}" method="GET">
+    <div class="input-group">
+        <input type="text" class="form-control" name="query" value="{{ query }}"
+        placeholder = "Filtra por Tipos de Novedades o Novedades" aria-describedby="basic-addon2" />
+        <button type="submit" class="btn btn-primary mr-1" id="idSearchSp">Buscar</button>
+    </div>
+</form>
+{% endblock %}
+
+{% block btnTitle %}
+<a class="btn btn-dark btn-add" href="{{ dirurl }}">
+    Registrar nueva novedad
+</a>
+{% endblock %}
+
+{% block thead %}
+<th> Tipo de Novedad </th>
+<th> Novedad </th>
+<th> Estado </th>
+<th> Acciones </th>
+{% endblock %}
+
+{% block tbody %}
+{% if novedad %}
+{% for nov in novedad %}
+<tr>
+    <td>{{ nov.tiponovedad }}</td>
+    <td>{{ nov.descripcion }}</td>
+    {% if nov.estado == True %}
+    <td>Activo</td>
+    {% else %}
+    <td>Inactivo</td>
+    {% endif %}
+    <td>
+        <a class="btn btn-dark" href="{% url 'novedad:editar_nov' nov.id %}">
+            Editar
+        </a>
+        <form action="{% url 'novedad:inactivar_activar_novedad' pk=nov.id %}" method="post" style="display: inline;">
+            {% csrf_token %}
+
+            {% if nov.estado %}
+            <button type="submit" class="btn btn-danger">Inactivar</button> 
+            {% else %}
+            <button type="submit" class="btn btn-success">Activar</button> 
+            {% endif %}
+        </form>
+    </td>
+</tr>
+{% endfor %}
+{% else %}
+<tr>
+    <td colspan="4"> No existen novedades registradas</td>
+</tr>
+{% endif %}
+
+{% endblock %}

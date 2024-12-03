@@ -1,0 +1,269 @@
+.content{
+    display: flex;
+    height: 100vh; /* Abarca toda la altura de la pantalla */
+	font-family: 'Arima', sans-serif;
+}
+
+header {
+	font-family: 'Arima',sans-serif;
+}
+
+.regist-content {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 5px 20px;
+	width: 100%;
+}
+.form-grid.grid-cal{
+	grid-template-columns: repeat(2, 1fr);
+}
+
+.form-grid.grid-turn{
+	grid-template-columns: repeat(2, 1fr);
+}
+
+.form-grid.grid-plan{
+	grid-template-columns: repeat(2, 1fr);
+}
+
+
+.form-grid.grid-rol{
+	grid-template-columns: repeat(1, 1fr);
+}
+
+.form-grid.grid-nov{
+	grid-template-columns: repeat(2, 1fr);
+}
+
+.form-grid.grid-tip{
+	grid-template-columns: repeat(1, 1fr);
+}
+
+.form-grid .input-div
+{
+	position: relative;
+    display: grid;
+    grid-template-columns: 7% 93%;
+    margin: 25px 0;
+    padding: 5px 0;
+    border-bottom: 2px solid #d9d9d9;
+}
+
+
+.i{
+	color: #c0bcbc;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 15px;
+}
+
+
+.input-div > div{
+    position: relative;
+	height: 35px;
+}
+
+.input-div > div > h5{
+	position: absolute;
+	left: 10px;
+	top: 50%;
+	transform: translateY(-50%);
+	color: #999;
+	font-size: 15px;
+	transition: .3s;
+}
+
+.input-div:before, .input-div:after{
+	content: '';
+	position: absolute;
+	bottom: -2px;
+	width: 0%;
+	height: 2px;
+	background-color: #12171e;
+	transition: .4s;
+}
+
+.form-grid .input-div:before{
+	right: 50%;
+}
+
+.form-grid .input-div:after{
+	left: 50%;
+}
+
+.form-grid .input-div.focus:before, .input-div.focus:after{
+	width: 50%;
+}
+
+.form-grid .input-div.focus > div > h5{
+	top: -4px;
+	font-size: 12px;
+}
+
+.form-grid .input-div.focus > .i > i{
+	color: #12171e;
+}
+
+
+.input-div .div span[id='toggleBtn1'],
+.input-div .div span[id='toggleBtn2']
+{
+    position: absolute;
+    background: rgba(46, 59, 78, 0.5);
+    top: 5px;
+    width: 30px;
+    height: 30px;
+    right: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+
+
+
+.input-div .div span[id='toggleBtn1']::before,
+.input-div .div span[id='toggleBtn2']::before
+{
+    content: '\f06e';
+    font-family: fontAwesome, serif;
+
+}
+
+.input-div .div span[id='toggleBtn1'].hide::before,
+.input-div .div span[id='toggleBtn2'].hide::before
+{
+    content: '\f070';
+    font-family: fontAwesome, serif;
+}
+
+
+
+.input-div > div > input,
+.input-div > div > select {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    background: none;
+    padding: 0 0 0 0.5rem ;
+    font-size: 1rem;
+    color: #555;
+    font-family: 'Arima', sans-serif;
+}
+
+/* .btn-cancel, .btn-save{
+	color: white;
+	padding: 0.4rem;} */
+
+.div-btn{
+	display: flex;
+	justify-content: space-evenly;
+}
+	
+.btn.btn-save{
+	background: rgb(39, 41, 150);
+}
+
+.btn.btn-cancel{
+	background-color: rgb(238, 56, 93);
+}
+
+.btn.btn-save:hover{
+	color: white;
+	background: rgb(74, 77, 236);
+}
+.btn.btn-cancel:hover{
+	color: white;
+	background-color: rgb(226, 88, 116);
+}
+
+
+.modal-content .btn{
+	display: inline-flex;
+	justify-content: center;
+	width: 30%;
+	height: 40px;
+	border-radius: 20px;
+	outline: none;
+	border: none;
+	font-size: 1rem;
+	color: #fff;
+	font-family: 'Arima', sans-serif;
+	margin: 1rem 0;
+	cursor: pointer;
+}
+
+.modal-content #btn-m{
+	display: inline;
+	border-radius: 7px;
+}
+
+
+/* Estilos adicionales para el campo select de rol */
+.input-div select {
+    appearance: none;
+    background-color: transparent;
+    cursor: pointer;
+    border: none;
+    color: #555;
+    font-family: 'Arima', sans-serif;
+}
+
+
+ .error-message {
+	background-color: #ffcccc;
+	color: #d8000c;
+	padding: 10px;
+	margin: 10px 0;
+	font-size: 1.2em;
+	border-radius: 5px;
+}
+
+
+/* Media Queries para adaptabilidad */
+@media screen and (max-width: 1050px){
+
+	.form-grid {
+		grid-template-columns: repeat(2, 1fr) !important;
+		gap: 20px;
+	}
+
+
+}
+
+
+@media screen and (max-width: 700px){
+	.form-grid {
+		grid-template-columns: repeat(1, 1fr) !important;
+	}
+
+}
+
+
+
+/* Responsividad en pantallas más pequeñas */
+@media screen and (max-width: 500px) {
+
+	
+	.form-grid {
+		width: 200px;
+	}
+
+   
+    
+}
+

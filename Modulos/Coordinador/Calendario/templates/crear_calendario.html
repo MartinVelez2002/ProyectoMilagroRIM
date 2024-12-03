@@ -1,0 +1,33 @@
+{% extends 'form.html' %}
+
+{% load static %}
+
+{% block controls %}
+<div class="form-grid grid-cal">
+    <div class="input-div one">
+        <div class="i">
+            <i class="fa-sharp fa-solid fa-window-maximize"></i>
+        </div>
+        <div class="div">
+            <h5>Fecha de Inicio</h5>
+            {{ form.fecha_inicio }}
+        </div>
+    </div>
+    <div class="input-div one">
+        <div class="i">
+            <i class="fa-sharp fa-solid fa-window-maximize"></i>
+        </div>
+        <div class="div">
+            <h5>Fecha Fin</h5>
+            {{ form.fecha_fin }}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'js/autocomplete_input.js' %}"></script>
+<script src="{% static 'js/input_effect.js' %}"></script>
+<script src="{% static 'js/fecha_limitada.js' %}" ></script>
+<script src="{% static 'js/ocultar_mensajes.js'%}"></script>
+{% endblock %}

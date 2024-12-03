@@ -1,0 +1,52 @@
+{% extends 'modulos.html' %}
+{% load static %}
+
+{% block title %}
+Modulo Auditoría
+{% endblock %}
+
+{% block btnTitle %}
+{% endblock %}
+
+{% block search %}
+<form method="GET" action="{{ dir_search }}" class="mb-3">
+    <div class="input-group">
+        <select name="query" class="form-select">
+            <option value="">-- Filtrar por Acción --</option>
+            {% for key, value in acciones %}
+            <option value="{{ key }}" {% if query == key %}selected{% endif %}>
+                {{ value }}
+            </option>
+            {% endfor %}
+        </select>
+        <button type="submit" class="btn btn-primary">Filtrar</button>
+    </div>
+</form>
+
+
+{% endblock %}
+
+{% block thead %}
+<th> Tabla </th>
+<th> Id de Registro </th>
+<th> Acción </th>
+<th> Fecha de la acción </th>
+<th> Hora </th>
+<th> Nombre de la máquina </th>
+<th> Estación </th>
+{% endblock %}
+
+
+{% block tbody %}
+{% for i in auditoria %}
+<tr>
+    <td> {{ i.tabla }} </td>
+    <td> {{ i.registro_id }} </td>
+    <td> {{ i.descripcion }} </td>
+    <td> {{ i.fecha }} </td>
+    <td> {{ i.hora }} </td>
+    <td> {{ i.nombre_maquina }} </td>
+    <td> {{ i.estacion }} </td>
+</tr>
+{% endfor %}
+{% endblock %}

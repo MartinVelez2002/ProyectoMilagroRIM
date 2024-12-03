@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        /* General body styling */
+        body {
+            font-family: 'Arima', sans-serif;
+            background-color: #f4f6f9;
+            margin: 20px;
+            color: #34495e;
+            line-height: 1.6;
+        }
+
+        /* Header styling */
+        .encabezado {
+            background-color: #2980b9;
+            color: white;
+            text-align: center;
+            vertical-align: middle;
+            border-radius: 10px;
+           
+        }
+
+        .encabezado h1 {
+            font-size: 26px;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        /* Section heading styles */
+        h2 {
+            color: #000;
+            font-size: 22px;
+            margin-top: 20px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        /* Paragraph styles */
+        p {
+        
+            font-size: 14px;
+            margin: 8px 0;
+        }
+
+       
+       
+        
+        th {
+            color:#000;
+            padding: 8px;
+            border: 1px solid #ddd;
+            text-align: center;
+            vertical-align: middle;
+        }
+        
+        td {
+            padding: 10px; /* Espaciado interno para las celdas */
+            border: 1px solid #ddd; /* Bordes suaves para las celdas */
+            vertical-align: top; /* Alinea el contenido en la parte superior */
+        }
+
+        span {
+            font-weight: bold;
+             color:#000;"
+        }
+
+
+        
+   
+        
+        .estado {
+            font-weight: bold; /* Texto en negrita */
+            font-size: 15px; /* Tamaño del texto */
+        
+        }
+        
+
+        .bg-info {
+            background-color:  #0dcaf0;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .bg-warning {
+            background-color: #ffc107;
+        }
+
+        .bg-success {
+            background-color: #28a745;
+        }
+
+        .bg-secondary {
+            background-color: #6c757d;
+        }
+
+        /* Styling for the evidence images */
+        .evidencia img {
+            max-width: 200px;
+            margin: 5px 0;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Links styling */
+        a {
+            color: #2980b9;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Specific column widths */
+        td.descripcion {
+            width: 40%; /* Set width for description column */
+        }
+
+        td.comentarios {
+            width: 35%; /* Set width for comments column */
+        }
+
+        td.evidencia {
+            width: 25%; /* Set width for evidence column */
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="encabezado" style="text-align: center; background-color: #6c757d;; padding: 20px;">
+        <h1 style="margin: 0; font-size: 24px; ">Reporte del Incidente</h1>
+    </div>
+    
+
+    <h2>Asunto</h2>
+    <p><span>Agente que reporta:</span> {{ cabecera.agente.usuario.nombre }} {{ cabecera.agente.usuario.apellido }}</p>
+    <p><span>Novedad:</span> {{ cabecera.novedad }}</p>
+    <p><span>Prioridad:</span> {{ cabecera.get_prioridad_display }}</p>
+    <p><span>Fecha:</span> {{ cabecera.fecha }}</p>
+
+    <h2>Detalle del Incidente</h2>
+    {% for detalle in detalles %}
+    <table style="width: 100%; border-collapse: collapse; font-size: 14px; margin: 20px 0;">
+        <thead >
+            <tr style="background-color:#6c757d; text-align: center;">
+                <th>Descripción</th>
+                <th>Comentarios</th>
+                <th>Evidencia</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if detalle.estado_incidente == "N" %}
+            <p>
+                <span><strong>Estado del incidente:</strong></span> 
+                <span class="estado bg-info">{{ detalle.estado_incidente_display }}</span>
+            </p>
+            
+            
+            <p><strong style="font-weight: bold; color: #000;">Hora:</strong> {{ detalle.hora }}</p>
+            <tr>
+                <td class="descripcion"><p>{{ detalle.descripcion }}</p></td>
+                <td class="comentarios"><p>{{ detalle.comentarios_adicionales|default:"No existen comentarios adicionales" }}</p></td>
+                <td class="evidencia">
+                    {% if detalle.evidencia %}
+                    <center><img src="{{ detalle.evidencia }}" alt="Evidencia"></center>
+                    {% else %}
+                    Sin evidencia
+                    {% endif %}
+                </td>
+            </tr>
+            {% elif detalle.estado_incidente == "E" %}
+            <p>
+                <span><strong>Estado del incidente:</strong></span>
+                <span class="estado bg-warning">{{ detalle.estado_incidente_display }}</span>
+            </p>
+ 
+            <p><strong style="font-weight: bold; color: #000;">Fecha:</strong> {{ cabecera.fecha }}</p>
+            <p><strong style="font-weight: bold; color: #000;">Hora:</strong> {{ detalle.hora }}</p>
+
+            
+            <tr>
+                <td class="descripcion"><p>{{ detalle.descripcion }}</p></td>
+                <td class="comentarios"><p>{{ detalle.comentarios_adicionales|default:"No hay comentarios adicionales" }}</p></td>
+                <td class="evidencia">
+                    {% if detalle.evidencia %}
+                    <center><img src="{{ detalle.evidencia }}" alt="Evidencia"></center>
+                    {% else %}
+                    Sin evidencia
+                    {% endif %}
+                </td>
+            </tr>
+            {% elif detalle.estado_incidente == "A" %}
+            <p>
+                <span><strong>Estado del incidente:</strong></span>
+                <span class="estado bg-success">{{ detalle.estado_incidente_display }}</span>
+            </p>
+            <p><strong style="font-weight: bold; color: #000;">Fecha:</strong> {{ cabecera.fecha }}</p>
+            <p><strong style="font-weight: bold; color: #000;">Hora:</strong> {{ detalle.hora }}</p>
+            <tr>
+                <td class="descripcion"><p>{{ detalle.descripcion }}</p></td>
+                <td class="comentarios"><p>{{ detalle.comentarios_adicionales|default:"No hay comentarios adicionales" }}</p></td>
+                <td class="evidencia">
+                    {% if detalle.evidencia %}
+                    <center><img src="{{ detalle.evidencia }}" alt="Evidencia"></center>
+                    {% else %}
+                    Sin evidencia
+                    {% endif %}
+                </td>
+            </tr>
+            {% elif detalle.estado_incidente == "C" %}
+            <p>
+                <span><strong>Estado del incidente:</strong></span>
+                <span class="estado bg-secondary">{{ detalle.estado_incidente_display }}</span>
+            </p>
+            <p><strong style="font-weight: bold; color: #000;">Fecha:</strong> {{ cabecera.fecha }}</p>
+            <p><strong style="font-weight: bold; color: #000;">Hora:</strong> {{ detalle.hora }}</p>        
+            <tr>
+                <td class="descripcion"><p>{{ detalle.descripcion }}</p></td>
+                <td class="comentarios"><p>{{ detalle.comentarios_adicionales|default:"No hay comentarios adicionales" }}</p></td>
+                <td class="evidencia">
+                    {% if detalle.evidencia %}
+                    <center><img src="{{ detalle.evidencia }}" alt="Evidencia"></center>
+                    {% else %}
+                    Sin evidencia
+                    {% endif %}
+                </td>
+            </tr>
+            {% endif %}
+        </tbody>
+    </table>
+    {% endfor %}
+
+</body>
+
+</html>

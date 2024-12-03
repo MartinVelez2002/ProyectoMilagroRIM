@@ -1,0 +1,70 @@
+{% extends 'modulos.html' %}
+{% load static %}
+
+{% block title %}
+Módulo Ubicación
+{% endblock %}
+{% block search %}
+<form action="{{ dir_search }}" method="GET">
+    <div class="d-flex flex-row mt-2">
+        <div class="input-group me-2">
+            <input type="text" class="form-control" name="query" value="{{ query }}"
+                placeholder="Filtrar por Lugar o Sector" aria-describedby="basic-addon2" />
+            <button type="submit" class="btn btn-primary mr-1" id="idSearchSp">Buscar</button>
+        </div>
+        <a href="{{ dir_search }}" class="btn btn-secondary ">Limpiar</a>
+    </div>
+</form>
+{% endblock %}
+
+
+{% block btnTitle %}
+<a class="btn btn-dark btn-add mt-2" href="{{ dirurl }}">
+    Registrar nueva Ubicación
+</a>
+{% endblock %}
+
+
+{% block thead %}
+<th> Lugar </th>
+<th> Sector </th>
+<th> Estado </th>
+<th> Acciones </th>
+{% endblock %}
+
+
+{% block tbody %}
+{% if ubicacion %}
+{% for i in ubicacion %}
+<tr>
+    <td> {{i.lugar}} </td>
+    <td> {{i.sector}} </td>
+    {% if i.estado == True %}
+    <td> Activo </td>
+    {% else %}
+    <td> Inactivo </td>
+    {% endif %}
+    <td>
+        <a class="btn btn-dark" href="{% url 'ubicacion:editar_ubicacion' i.id %}">
+            Editar
+        </a>
+
+        <form action="{% url 'ubicacion:inactivar_activar_ubicacion' i.id %}" method="post" style="display: inline;">
+            {% csrf_token %}
+
+            {% if i.estado %}
+            <button type="submit" class="btn btn-danger">Inactivar</button>
+            {% else %}
+            <button type="submit" class="btn btn-success">Activar</button>
+            {% endif %}
+        </form>
+
+    </td>
+</tr>
+{% endfor %}
+{% else %}
+<tr>
+    <td colspan="5"> No existe ubicación registrada </td>
+</tr>
+{% endif %}
+{% endblock %}

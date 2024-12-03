@@ -1,0 +1,62 @@
+{% extends 'modulos.html' %}
+{% load static %}
+
+{% block title %}
+Módulo roles
+{% endblock %}
+
+{% block btnTitle %}
+<a class="btn btn-dark btn-add" href="{{ dirurl }}">
+    Registrar un nuevo rol
+</a>
+{% endblock %}
+
+{% block thead %}
+<th> Nombre del rol </th>
+<th> Estado  </th>
+<th> Acciones </th>
+{% endblock %}
+
+{% block tbody %}
+{% if rol %}
+{% for i in rol %}
+
+<tr>
+    <td> {{i.name}} </td>
+    <td> 
+        {% if i.estado %}
+            Activo
+        {% else %}
+            Inactivo
+        {% endif %}
+    </td>
+    <td>
+        
+    {% if request.user.rol is not None %}
+        <a class="btn btn-dark" href="{% url 'login:editar_rol' i.id %}">
+            Editar
+        </a>
+    {%endif %}
+        <form action="{% url 'login:inactivar_rol' pk=i.id %}" method="post" style="display: inline;">
+            {% csrf_token %}
+
+            {% if i.estado %}
+            <button type="submit" class="btn btn-danger">Inactivar</button> 
+            {% else %}
+            <button type="submit" class="btn btn-success">Activar</button> 
+           
+            {% endif %}
+        </form>
+
+    </td>
+</tr>
+{% endfor %}
+{% else %}
+<tr>
+    <td colspan="3"> No existen roles registrados </td>
+</tr>
+{% endif %}
+
+{% endblock %}
+
+

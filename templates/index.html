@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="es">
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+        {% block title %}
+        Inicio
+        {% endblock %}
+    </title>
+   
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  
+ 
+    <link href="https://fonts.googleapis.com/css2?family=Arima:wght@100..700&display=swap" rel="stylesheet">
+
+    {% block css %}
+    <link rel="stylesheet" href="{% static 'css/modulos.css' %}">
+    <link rel="stylesheet" href="{% static 'css/diseño_forms.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style_tabla.css' %}">
+    {% endblock %}
+
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="icon" href="{% static 'img/logo_alcaldia_milagro_ico.ico' %}" type="image/x-icon">
+    
+</head>
+
+<body>
+
+        <header>
+        {% block header %}
+       
+            {% include 'navbar.html' %}
+       
+        {% endblock %}
+        </header>
+
+        {% block main %}
+        <div class="cards-container">
+            <main class="cards">
+                {% if request.user.is_superuser %}
+                <a href="{% url 'login:configuracion_inicial' %}">
+                    <div class="card">
+                        <div class="img-container">
+                            <img class="img" src="{% static 'img/modulos/user_role.png' %}" alt="User_RoleImg">
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text"> Configuración Inicial </p>
+                        </div>
+                    </div>
+                </a>
+               {% endif %}
+
+                
+                {% if request.user.rol and request.user.rol.name == 'Coordinador'%}
+                <a href="{% url 'login:listar_rol' %}">
+                    <div class="card">
+                        <div class="img-container">
+                            <img class="img" src="{% static 'img/modulos/Rol.png' %}" alt="RolImg">
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text"> Rol </p>
+                        </div>
+                    </div>
+                </a>
+               
+                <a href="{% url 'login:personal' %}">
+                    <div class="card">
+                        <div class="img-container">
+                            <img class="img" src="{% static 'img/modulos/Registrodelpersonal.png' %}"
+                                alt="RegPersonalImg">
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text"> Registro de personal </p>
+                        </div>
+                    </div>
+                </a>
+            
+                <a href="{% url 'reportesCoord:listado_reportes_agente' %}">
+                    <div class="card">
+                        <div class="img-container">
+                            <img class="img" src="{% static 'img/modulos/Reportesdelpersonal.png' %}"
+                                alt="ReportesPersonal">
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text"> Reportes del personal </p>
+                        </div>
+                    </div>
+                </a>
+                <a href="{% url 'turno:listar_turno' %}">
+                    <div class="card">
+                        <div class="img-container">
+                            <img class="img" src="{% static 'img/modulos/Turno.png' %}" alt="TurnoImg">
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text"> Turno </p>
+                        </div>
+                    </div>
+                </a>
+                <a href="{% url 'novedad:inicio_tipoNov' %}">
+                    <div class="card">
+                        <div class="img-container">
+                            <img class="img" src="{% static 'img/modulos/TipoNovedad.png' %}" alt="TipoNovImg">
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text"> Tipo de Novedades </p>
+                        </div>
+                    </div>
+                </a>
+                <a href="{% url 'novedad:inicio' %}">
+                    <div class="card">
+                        <div class="img-container">
+                            <img class="img" src="{% static 'img/modulos/Novedad.png' %}" alt="NovedadImg">
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text"> Novedades </p>
+                        </div>
+                    </div>
+                </a>
+                <a href="{% url 'ubicacion:inicio' %}">
+                    <div class="card">
+                        <div class="img-container">
+                            <img class="img" src="{% static 'img/modulos/Ubicacion.png' %}" alt="UbicacionImg">
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text"> Lugares de Guardia </p>
+                        </div>
+                    </div>
+                </a>
+                <a href="{% url 'calendario:listado_calendario' %}">
+                    <div class="card">
+                        <div class="img-container">
+                            <img class="img" src="{% static 'img/modulos/Calendario.png' %}" alt="CalendarioImg">
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text"> Periodo </p>
+                        </div>
+                    </div>
+                </a>
+                <a href="{% url 'calendario:listar_planificacion' %}">
+                    <div class="card">
+                        <div class="img-container">
+                            <img class="img" src="{% static 'img/modulos/Planificacion.png' %}" alt="PlanificacionImg">
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text"> Planificación </p>
+                        </div>
+                    </div>
+                </a>
+                <a href="{% url 'auditoria:listar_auditoria' %}">
+                    <div class="card">
+                        <div class="img-container">
+                            <img class="img" src="{% static 'img/modulos/Auditoria.png' %}" alt="PlanificacionImg">
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text"> Auditoría </p>
+                        </div>
+                    </div>
+                </a>
+                {% endif %}
+                {% if request.user.rol and request.user.rol.name == 'Agente' %}
+                <a href="{% url 'reportes:listar_reportes' %}">
+                    <div class="card">
+                        <div class="img-container">
+                            <img class="img" src="{% static 'img/modulos/Reportes.png' %}" alt="PlanificacionImg">
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text"> Realizar un reporte </p>
+                        </div>
+                    </div>
+                </a> 
+                {% endif %}
+            </main>
+        </div>
+        {% endblock %}
+    
+    <!-- Font Awesome -->
+
+    
+ 
+    <script src="https://kit.fontawesome.com/1a76f9833f.js" crossorigin="anonymous"></script>
+    <!-- JS - Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+        integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
+        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"
+        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+   
+
+   
+    <script src="{% static 'js/side_bar.js' %}"></script>
+    <script src="{% static 'js/modal.js' %}"></script>
+    
+   
+    {% block js %}
+
+    {% endblock %}
+
+
+
+ 
+</body>
+
+</html>

@@ -1,0 +1,29 @@
+{% extends 'form.html' %}
+{% load static %}
+
+{% block controls %}
+
+<div class="form-grid grid-nov">
+    <div class="input-div one">
+        <div class="i">
+            <i class="fa-sharp fa-solid fa-window-maximize"></i>
+        </div>
+        <div class="div">
+            <h5>Tipo de Novedad</h5>
+            {{ form.tiponovedad }}
+        </div>
+    </div>
+
+    <div class="input-div one">
+        <div class="i">
+            <i class="fa-sharp fa-solid fa-whiskey-glass"></i>
+        </div>
+        <div class="div">
+            <h5>Descripción de la novedad</h5>
+            {{ form.descripcion }}
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

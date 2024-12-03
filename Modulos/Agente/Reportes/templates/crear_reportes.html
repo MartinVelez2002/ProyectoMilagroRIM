@@ -1,0 +1,79 @@
+{% extends 'form.html' %}
+{% load static %}
+
+
+{% block controls %}
+
+
+<!-- Formulario -->
+<form method="POST" action="{{ action_save }}" enctype="multipart/form-data" name="registro">
+    {% csrf_token %}
+
+    <div class="form-header">
+        <div class="row pb-3">
+            <!-- Fecha y Hora -->
+            <div class="col-md-6">
+                <h5>Fecha</h5>
+                <input class="form-control" type="date" name="fecha" disabled>
+            </div>
+            <div class="col-md-6">
+                <h5>Hora</h5>
+                <input class="form-control" type="time" name="hora" disabled>
+            </div>
+        </div>
+
+        <div class="row pb-2">
+            <!-- Novedad y Prioridad -->
+            <div class="col-md-6">
+                <h5>Novedad</h5>
+                {{ form.novedad }}
+            </div>
+            <div class="col-md-6">
+                <h5>Prioridad</h5>
+                {{ form.prioridad }}
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- Detalles del Formulario -->
+    <div class="row">
+        <div class="col-md-6">
+            <h5>Evidencia</h5>
+            {{ detalle_form.evidencia }}
+        </div>
+        <div class="col-md-6">
+            <h5>Descripción</h5>
+            {{ detalle_form.descripcion }}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h5>Comentarios Adicionales</h5>
+            {{ detalle_form.comentarios_adicionales }}
+        </div>
+    </div>
+
+</form>
+
+
+<!-- Script para Fecha y Hora Automática -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const now = new Date();
+        document.querySelector('input[name="fecha"]').value = now.toISOString().split('T')[0];
+        document.querySelector('input[name="hora"]').value = now.toTimeString().split(' ')[0].substring(0, 5);
+    });
+</script>
+
+
+
+{% block JS %}
+<script src="https://kit.fontawesome.com/6f24398be6.js" crossorigin="anonymous"></script>
+<script src="{% static 'js/ocultar_mensajes.js'%}"></script>
+
+{% endblock %}
+
+{% endblock %}
