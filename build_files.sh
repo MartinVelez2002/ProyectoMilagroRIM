@@ -1,10 +1,7 @@
 #!/bin/bash
-
-echo "Instalando las dependencias desde requirements.txt..."
-pip install -r requirements.txt || { echo "Error al instalar dependencias"; exit 1; }
-
-echo "Verificando la instalación de Django..."
-python3.9 -m django --version || { echo "Django no está instalado correctamente"; exit 1; }
+# build_files.sh
+pip install -r requirements.txt
+python3.9 manage.py collectstatic
 
 echo "Aplicando migraciones..."
 python3.9 manage.py makemigrations || { echo "Error al ejecutar makemigrations"; exit 1; }
